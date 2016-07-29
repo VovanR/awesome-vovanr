@@ -1,6 +1,6 @@
 const apiAddress = 'https://api.github.com'
 const username = 'vovanr'
-const token = 'access_token='
+const token = 'access_token=d150a08e4743e6d2bcea56d8c2ed3635d6cee501'
 const appBlock = document.body
 
 fetchUserRepos().then(buildRepos)
