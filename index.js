@@ -1,22 +1,41 @@
 const apiAddress = 'https://api.github.com'
 const username = 'vovanr'
-const token = 'access_token=d150a08e4743e6d2bcea56d8c2ed3635d6cee501'
+const token = 'd150a08e4743e6d2bcea56d8c2ed3635d6cee501'
+const blackList = [
+    'awesome-vovanr',
+    'backbone-learning',
+    'django-404-500-scaffold',
+    'django-amd-requirejs-scaffold',
+    'dotfiles',
+    'frontend-elements-dictionary',
+    'generator-django-js-module',
+]
 const appBlock = document.body
 
 fetchUserRepos().then(buildRepos)
 
 function fetchUserData() {
-    return fetch(`${apiAddress}/users/${username}?${token}`)
+    return fetch(`${apiAddress}/users/${username}?access_token=${token}`)
         .then(x => x.json())
 }
 
 function fetchUserRepos() {
-    return fetch(`${apiAddress}/users/${username}/repos?${token}`)
+    return fetch(`${apiAddress}/users/${username}/repos?access_token=${token}`)
         .then(x => x.json())
+        .then(filterForks)
+        .then(filterBlackList)
+}
+
+function filterForks(repos) {
+    return repos.filter(repo => !repo.fork)
+}
+
+function filterBlackList(repos) {
+    return repos.filter(repo => !blackList.includes(repo.name))
 }
 
 function fetchUserRepoContents(repo) {
-    return fetch(`${apiAddress}/repos/${username}/${repo}/contents/package.json?${token}`)
+    return fetch(`${apiAddress}/repos/${username}/${repo}/contents/package.json?access_token=${token}`)
         .then(x => x.json())
 }
 
@@ -69,9 +88,6 @@ function buildDeps(deps) {
         block.appendChild(item)
     })
     return block
-}
-
-function buldDep(dep) {
 }
 
 /**
