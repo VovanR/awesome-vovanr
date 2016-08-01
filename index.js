@@ -52,7 +52,7 @@ function buildRepo(repo) {
 
     const code = buildBlock('code')
 
-    const button = buildBlock('button', '', '-')
+    const button = buildBlock('button', '', '+')
     button.setAttribute('type', 'button')
     button.addEventListener('click', () => {
         fetchUserRepoContents(repo.name)
@@ -72,6 +72,10 @@ function buildRepo(repo) {
 
     const name = buildBlock('span', '', repo.name)
     link.appendChild(name)
+
+    const shield = buildBlock('img')
+    shield.setAttribute('src', `https://david-dm.org/${username}/${repo.name}/dev-status.svg?style=flat-square`)
+    link.appendChild(shield)
 
     const pre = buildBlock('pre')
     block.appendChild(pre)

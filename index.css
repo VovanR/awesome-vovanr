@@ -2,3 +2,30 @@ body {
     margin: 0;
     font-family: Monaco, 'Courier New', monospace;
 }
+
+li {
+    list-style-type: none;
+}
+
+button {
+    margin-right: 0.5em;
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+span {
+}
+
+img {
+    vertical-align: middle;
+    opacity: 0.15;
+    margin-left: 0.5em;
+}
+
+li:hover img {
+    opacity: 1;
+}
