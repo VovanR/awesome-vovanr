@@ -1,6 +1,8 @@
 body {
     margin: 0;
-    font-family: Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    font-family: "menlo", consolas, monospace;
+    background-color: #f1efee;
 }
 
 li {
@@ -13,8 +15,13 @@ button {
 }
 
 a {
+    color: #1b1918;
     text-decoration: none;
     vertical-align: middle;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 span {
@@ -28,4 +35,31 @@ img {
 
 li:hover img {
     opacity: 1;
+}
+
+pre {
+    padding: 10px 20px;
+    /* display: inline-block; */
+    white-space: pre;
+    overflow: auto;
+    word-spacing: normal;
+    word-break: normal;
+}
+
+.deps {
+    color: #464b50;
+    margin: 0;
+    padding: 0;
+}
+
+.deps__item {
+    list-style-type: none;
+}
+
+.deps__label {
+    color: #cf6a4c;
+}
+
+.deps__value {
+    color: #8f9d6a;
 }

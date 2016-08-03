@@ -51,14 +51,13 @@ function buildRepo(repo) {
     const block = buildBlock('li')
 
     const pre = buildBlock('pre')
-    const code = buildBlock('code')
-    pre.appendChild(code)
+    pre.style.display = 'none'
 
     const button = buildBlock('button', '', '+')
     button.setAttribute('type', 'button')
     let isFetched = false
     button.addEventListener('click', () => {
-        toggleCode(button, code)
+        toggleDeps(button, pre)
         if (isFetched) return
         isFetched = true
         fetchUserRepoContents(repo.name)
@@ -66,7 +65,7 @@ function buildRepo(repo) {
             .then(base64ToJSON)
             .then(x => x.devDependencies)
             .then(buildDeps)
-            .then(x => code.appendChild(x))
+            .then(x => pre.appendChild(x))
     })
     block.appendChild(button)
 
@@ -86,20 +85,28 @@ function buildRepo(repo) {
     return block
 }
 
-function toggleCode(button, code) {
+function toggleDeps(button, deps) {
     if (button.innerHTML === '+') {
-        code.style.display = ''
+        deps.style.display = ''
         button.innerHTML = '−'
     } else {
-        code.style.display = 'none'
+        deps.style.display = 'none'
         button.innerHTML = '+'
     }
 }
 
 function buildDeps(deps) {
-    const block = buildBlock('ul')
+    const block = buildBlock('ul', 'deps')
     Object.keys(deps).forEach(name => {
-        const item = buildBlock('li', '', `${name}: "${deps[name]}"`)
+        const item = buildBlock('li', 'deps__item')
+        const label = buildBlock('span', 'deps__label', name)
+        item.appendChild(label)
+        const sep = document.createTextNode(': "')
+        item.appendChild(sep)
+        const value = buildBlock('span', 'deps__value', deps[name])
+        item.appendChild(value)
+        const sep2 = document.createTextNode('"')
+        item.appendChild(sep2)
         block.appendChild(item)
     })
     return block
