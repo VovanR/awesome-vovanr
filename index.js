@@ -1,6 +1,7 @@
-const apiAddress = 'https://api.github.com'
-const username = 'vovanr'
-const token = 'd150a08e4743e6d2bcea56d8c2ed3635d6cee501'
+const GH_API_URL = 'https://api.github.com'
+const USERNAME = 'vovanr'
+const TOKEN = 'd150a08e4743e6d2bcea56d8c2ed3635d6cee501'
+
 const blackList = [
     'awesome-vovanr',
     'backbone-learning',
@@ -12,15 +13,16 @@ const blackList = [
 ]
 const appBlock = document.body
 
+// Initialize
 fetchUserRepos().then(buildRepos)
 
 function fetchUserData() {
-    return fetch(`${apiAddress}/users/${username}?access_token=${token}`)
+    return fetch(`${GH_API_URL}/users/${USERNAME}?access_token=${TOKEN}`)
         .then(x => x.json())
 }
 
 function fetchUserRepos() {
-    return fetch(`${apiAddress}/users/${username}/repos?access_token=${token}`)
+    return fetch(`${GH_API_URL}/users/${USERNAME}/repos?access_token=${TOKEN}`)
         .then(x => x.json())
         .then(filterForks)
         .then(filterBlackList)
@@ -35,20 +37,18 @@ function filterBlackList(repos) {
 }
 
 function fetchUserRepoContents(repo) {
-    return fetch(`${apiAddress}/repos/${username}/${repo}/contents/package.json?access_token=${token}`)
+    return fetch(`${GH_API_URL}/repos/${USERNAME}/${repo}/contents/package.json?access_token=${TOKEN}`)
         .then(x => x.json())
 }
 
 function buildRepos(repos) {
-    const block = buildBlock('ul')
-    repos.forEach(repo => {
-        block.appendChild(buildRepo(repo))
-    })
+    const block = buildBlock('ul', 'repos')
+    repos.forEach(repo => block.appendChild(buildRepo(repo)))
     appBlock.appendChild(block)
 }
 
 function buildRepo(repo) {
-    const block = buildBlock('li')
+    const block = buildBlock('li', 'repos__item')
 
     const pre = buildBlock('pre')
     pre.style.display = 'none'
@@ -69,29 +69,40 @@ function buildRepo(repo) {
     })
     block.appendChild(button)
 
-    const link = buildBlock('a')
+    const link = buildBlock('a', '', repo.name)
     link.setAttribute('href', repo.html_url)
     block.appendChild(link)
 
-    const name = buildBlock('span', '', repo.name)
-    link.appendChild(name)
-
-    const shield = buildBlock('img')
-    shield.setAttribute('src', `https://david-dm.org/${username}/${repo.name}/dev-status.svg?style=flat-square`)
-    link.appendChild(shield)
+    const shield = buildShield(repo.name)
+    block.appendChild(shield)
 
     block.appendChild(pre)
 
     return block
 }
 
+function buildShield(repo) {
+    const DAVID_URL = 'https://david-dm.org'
+    const link = buildBlock('a')
+    link.setAttribute('href', `${DAVID_URL}/${USERNAME}/${repo}?type=dev`)
+
+    const shield = buildBlock('img')
+    shield.setAttribute('src', `${DAVID_URL}/${USERNAME}/${repo}/dev-status.svg?style=flat-square`)
+    link.appendChild(shield)
+
+    return link
+}
+
 function toggleDeps(button, deps) {
-    if (button.innerHTML === '+') {
+    const collapsed = '+'
+    const expanded = '−'
+
+    if (button.innerHTML === collapsed) {
         deps.style.display = ''
-        button.innerHTML = '−'
+        button.innerHTML = expanded
     } else {
         deps.style.display = 'none'
-        button.innerHTML = '+'
+        button.innerHTML = collapsed
     }
 }
 
@@ -99,14 +110,19 @@ function buildDeps(deps) {
     const block = buildBlock('ul', 'deps')
     Object.keys(deps).forEach(name => {
         const item = buildBlock('li', 'deps__item')
+
         const label = buildBlock('span', 'deps__label', name)
         item.appendChild(label)
+
         const sep = document.createTextNode(': "')
         item.appendChild(sep)
+
         const value = buildBlock('span', 'deps__value', deps[name])
         item.appendChild(value)
+
         const sep2 = document.createTextNode('"')
         item.appendChild(sep2)
+
         block.appendChild(item)
     })
     return block
@@ -123,13 +139,9 @@ function buildDeps(deps) {
 function buildBlock(tagName, className, text) {
 	const block = document.createElement(tagName)
 
-	if (className) {
-		block.setAttribute('class', className)
-	}
+	if (className) block.setAttribute('class', className)
 
-	if (text) {
-		block.innerHTML = String(text)
-	}
+	if (text) block.innerHTML = String(text)
 
 	return block
 }

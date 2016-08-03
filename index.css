@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-size: 14px;
+    /* font-size: 14px; */
     font-family: "menlo", consolas, monospace;
     background-color: #f1efee;
 }
@@ -12,6 +12,9 @@ li {
 button {
     margin-right: 0.5em;
     vertical-align: middle;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
 }
 
 a {
@@ -20,8 +23,7 @@ a {
     vertical-align: middle;
 }
 
-a:hover {
-    text-decoration: underline;
+a:hover { text-decoration: underline;
 }
 
 span {
@@ -31,13 +33,19 @@ img {
     vertical-align: middle;
     opacity: 0.15;
     margin-left: 0.5em;
+    transition: opacity ease 0.1s;
 }
 
 li:hover img {
+    opacity: 0.75;
+}
+
+li img:hover {
     opacity: 1;
 }
 
 pre {
+    margin: 0 0 0 10px;
     padding: 10px 20px;
     /* display: inline-block; */
     white-space: pre;
@@ -45,6 +53,21 @@ pre {
     word-spacing: normal;
     word-break: normal;
 }
+
+
+.repos {
+    margin: 0;
+    padding: 2em;
+}
+
+.repos__item {
+    margin: 0.75em 0 0;
+}
+
+.repos__item:first-child {
+    margin-top: 0;
+}
+
 
 .deps {
     color: #464b50;
