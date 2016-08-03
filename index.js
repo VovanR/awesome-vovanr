@@ -50,19 +50,23 @@ function buildRepos(repos) {
 function buildRepo(repo) {
     const block = buildBlock('li')
 
+    const pre = buildBlock('pre')
     const code = buildBlock('code')
+    pre.appendChild(code)
 
     const button = buildBlock('button', '', '+')
     button.setAttribute('type', 'button')
+    let isFetched = false
     button.addEventListener('click', () => {
+        toggleCode(button, code)
+        if (isFetched) return
+        isFetched = true
         fetchUserRepoContents(repo.name)
             .then(x => x.content)
             .then(base64ToJSON)
             .then(x => x.devDependencies)
             .then(buildDeps)
-            .then(x => {
-                code.appendChild(x)
-            })
+            .then(x => code.appendChild(x))
     })
     block.appendChild(button)
 
@@ -77,12 +81,19 @@ function buildRepo(repo) {
     shield.setAttribute('src', `https://david-dm.org/${username}/${repo.name}/dev-status.svg?style=flat-square`)
     link.appendChild(shield)
 
-    const pre = buildBlock('pre')
     block.appendChild(pre)
 
-    pre.appendChild(code)
-
     return block
+}
+
+function toggleCode(button, code) {
+    if (button.innerHTML === '+') {
+        code.style.display = ''
+        button.innerHTML = '−'
+    } else {
+        code.style.display = 'none'
+        button.innerHTML = '+'
+    }
 }
 
 function buildDeps(deps) {
