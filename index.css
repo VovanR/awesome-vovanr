@@ -1,4 +1,6 @@
 body {
+    display: flex;
+    justify-content: center;
     margin: 0;
     /* font-size: 14px; */
     font-family: "menlo", consolas, monospace;
