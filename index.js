@@ -1,5 +1,5 @@
 const GH_API_URL = 'https://api.github.com'
-const USERNAME = 'vovanr'
+const USERNAME = 'VovanR'
 const TOKEN = 'd150a08e4743e6d2bcea56d8c2ed3635d6cee501'
 
 const blackList = [
@@ -14,15 +14,41 @@ const blackList = [
 const appBlock = document.body
 
 // Initialize
-fetchUserRepos().then(buildRepos)
+buildHeader()
 
-function fetchUserData() {
-    return fetch(`${GH_API_URL}/users/${USERNAME}?access_token=${TOKEN}`)
+function buildHeader() {
+    const block = buildBlock('h1')
+    const label = buildBlock('label', '', 'Awesome ')
+    const input = buildBlock('input')
+
+    let username = localStorage.getItem('username') || USERNAME
+    username = username.trim()
+    input.value = username
+    input.addEventListener('blur', function () {
+        if (this.value === username) return
+        localStorage.setItem('username', username = this.value.trim())
+        rebuildDeps(username)
+    })
+
+    label.appendChild(input)
+    block.appendChild(label)
+    appBlock.appendChild(block)
+
+    rebuildDeps(username)
+}
+
+function rebuildDeps(username) {
+    fetchUserRepos(username)
+        .then(repos => buildRepos(username, repos))
+}
+
+function fetchUserData(username) {
+    return fetch(`${GH_API_URL}/users/${username}?access_token=${TOKEN}`)
         .then(x => x.json())
 }
 
-function fetchUserRepos() {
-    return fetch(`${GH_API_URL}/users/${USERNAME}/repos?access_token=${TOKEN}`)
+function fetchUserRepos(username) {
+    return fetch(`${GH_API_URL}/users/${username}/repos?access_token=${TOKEN}`)
         .then(x => x.json())
         .then(filterForks)
         .then(filterBlackList)
@@ -36,18 +62,18 @@ function filterBlackList(repos) {
     return repos.filter(repo => !blackList.includes(repo.name))
 }
 
-function fetchUserRepoContents(repo) {
-    return fetch(`${GH_API_URL}/repos/${USERNAME}/${repo}/contents/package.json?access_token=${TOKEN}`)
+function fetchUserRepoContents(username, repo) {
+    return fetch(`${GH_API_URL}/repos/${username}/${repo}/contents/package.json?access_token=${TOKEN}`)
         .then(x => x.json())
 }
 
-function buildRepos(repos) {
+function buildRepos(username, repos) {
     const block = buildBlock('ul', 'repos')
-    repos.forEach(repo => block.appendChild(buildRepo(repo)))
+    repos.forEach(repo => block.appendChild(buildRepo(username, repo)))
     appBlock.appendChild(block)
 }
 
-function buildRepo(repo) {
+function buildRepo(username, repo) {
     const block = buildBlock('li', 'repos__item')
 
     const pre = buildBlock('pre')
@@ -60,7 +86,7 @@ function buildRepo(repo) {
         toggleDeps(button, pre)
         if (isFetched) return
         isFetched = true
-        fetchUserRepoContents(repo.name)
+        fetchUserRepoContents(username, repo.name)
             .then(x => x.content)
             .then(base64ToJSON)
             .then(buildDeps)
@@ -73,21 +99,21 @@ function buildRepo(repo) {
     block.appendChild(link)
 
     // David Dependencies Shields
-    block.appendChild(buildShield(repo.name))
-    block.appendChild(buildShield(repo.name, true))
+    block.appendChild(buildShield(username, repo.name))
+    block.appendChild(buildShield(username, repo.name, true))
 
     block.appendChild(pre)
 
     return block
 }
 
-function buildShield(repo, isDev) {
+function buildShield(username, repo, isDev) {
     const DAVID_URL = 'https://david-dm.org'
     const link = buildBlock('a')
-    link.setAttribute('href', `${DAVID_URL}/${USERNAME}/${repo}${isDev ? '?type=dev' : ''}`)
+    link.setAttribute('href', `${DAVID_URL}/${username}/${repo}${isDev ? '?type=dev' : ''}`)
 
     const shield = buildBlock('img')
-    shield.setAttribute('src', `${DAVID_URL}/${USERNAME}/${repo}${isDev ? '/dev-status' : ''}.svg?style=flat-square`)
+    shield.setAttribute('src', `${DAVID_URL}/${username}/${repo}${isDev ? '/dev-status' : ''}.svg?style=flat-square`)
     link.appendChild(shield)
 
     return link
