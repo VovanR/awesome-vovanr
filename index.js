@@ -63,7 +63,6 @@ function buildRepo(repo) {
         fetchUserRepoContents(repo.name)
             .then(x => x.content)
             .then(base64ToJSON)
-            .then(x => x.devDependencies)
             .then(buildDeps)
             .then(x => pre.appendChild(x))
     })
@@ -73,21 +72,22 @@ function buildRepo(repo) {
     link.setAttribute('href', repo.html_url)
     block.appendChild(link)
 
-    const shield = buildShield(repo.name)
-    block.appendChild(shield)
+    // David Dependencies Shields
+    block.appendChild(buildShield(repo.name))
+    block.appendChild(buildShield(repo.name, true))
 
     block.appendChild(pre)
 
     return block
 }
 
-function buildShield(repo) {
+function buildShield(repo, isDev) {
     const DAVID_URL = 'https://david-dm.org'
     const link = buildBlock('a')
-    link.setAttribute('href', `${DAVID_URL}/${USERNAME}/${repo}?type=dev`)
+    link.setAttribute('href', `${DAVID_URL}/${USERNAME}/${repo}${isDev ? '?type=dev' : ''}`)
 
     const shield = buildBlock('img')
-    shield.setAttribute('src', `${DAVID_URL}/${USERNAME}/${repo}/dev-status.svg?style=flat-square`)
+    shield.setAttribute('src', `${DAVID_URL}/${USERNAME}/${repo}${isDev ? '/dev-status' : ''}.svg?style=flat-square`)
     link.appendChild(shield)
 
     return link
@@ -106,7 +106,21 @@ function toggleDeps(button, deps) {
     }
 }
 
-function buildDeps(deps) {
+function buildDeps(package) {
+    const {dependencies, devDependencies} = package
+    const block = document.createDocumentFragment()
+
+    if (dependencies && Object.keys(dependencies).length) {
+        block.appendChild(buildBlock('small', '', 'dependencies'))
+        block.appendChild(buildDepsList(dependencies))
+    }
+    block.appendChild(buildBlock('small', '', 'devDependencies'))
+    block.appendChild(buildDepsList(devDependencies))
+
+    return block
+}
+
+function buildDepsList(deps) {
     const block = buildBlock('ul', 'deps')
     Object.keys(deps).forEach(name => {
         const item = buildBlock('li', 'deps__item')
