@@ -13,11 +13,21 @@ h1 {
     flex: 1 1 100%;
 }
 
+h3 {
+    text-align: center;
+    flex: 1 1 100%;
+}
+
 input {
     font: inherit;
     background: none;
     border: 1px solid;
     padding: 0.1em 0.25em;
+    margin-left: 0.25em;
+}
+
+.token__input {
+    width: calc(40 * 0.61em);
 }
 
 li {
