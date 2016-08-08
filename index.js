@@ -1,5 +1,6 @@
 const GH_API_URL = 'https://api.github.com'
 const USERNAME = 'VovanR'
+const PER_PAGE = 100
 const DAVID_URL = 'https://david-dm.org'
 
 const blackList = [
@@ -10,6 +11,14 @@ const blackList = [
     'dotfiles',
     'frontend-elements-dictionary',
     'generator-django-js-module',
+    'isometric-map',
+    'MoonShine_Cursors',
+    'notes',
+    'show-me-which',
+    'userscripts',
+    'v-addhost',
+    'v-xfce-random-wallpaper',
+    'VovanR.github.io',
 ]
 const appBlock = document.body
 
@@ -76,7 +85,7 @@ function fetchUserData(username) {
 function fetchUserRepos() {
     const username = getUsername()
     const token = getToken()
-    return fetch(`${GH_API_URL}/users/${username}/repos${token ? '?access_token=' + token : ''}`)
+    return fetch(`${GH_API_URL}/users/${username}/repos?per_page=${PER_PAGE}${token ? '&access_token=' + token : ''}`)
         .then(x => x.json())
         .then(filterForks)
         .then(filterBlackList)
