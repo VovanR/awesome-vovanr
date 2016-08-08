@@ -43,7 +43,7 @@ function buildSubheader() {
     const help = buildBlock('sup')
     help.setAttribute('title', 'GitHub OAuth2 Token')
     const link = buildBlock('a', '', '?')
-    link.setAttribute('href', 'https://github.com/settings/tokens')
+    link.setAttribute('href', 'https://help.github.com/articles/creating-an-access-token-for-command-line-use/')
     help.appendChild(link)
 
     let token = localStorage.getItem('token')
