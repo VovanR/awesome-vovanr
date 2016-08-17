@@ -212,6 +212,7 @@ function buildDepsList(deps) {
 
         block.appendChild(item)
     })
+
     return block
 }
 
