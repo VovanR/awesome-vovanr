@@ -1,0 +1,12 @@
+.repos {
+    margin: 0;
+    padding: 2em;
+}
+
+.repos__item {
+    margin: 0.75em 0 0;
+}
+
+.repos__item:first-child {
+    margin-top: 0;
+}
