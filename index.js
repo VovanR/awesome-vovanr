@@ -25,6 +25,8 @@ const _storeData = [
 			'show-me-which',
 			'userscripts',
 			'v-addhost',
+			'v-dummyimage',
+			'v-pomodoro-alert',
 			'v-xfce-random-wallpaper',
 			'VovanR.github.io',
 		]
