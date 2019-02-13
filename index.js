@@ -126,6 +126,8 @@ function rebuildDeps() {
 	}
 
 	fetchUserRepos()
+		.then(filterForks)
+		.then(filterIgnored)
 		.then(buildRepos)
 }
 
@@ -137,14 +139,18 @@ function fetchUserData() {
 		.then(x => x.json())
 }
 
-function fetchUserRepos() {
+function fetchUserRepos(page = 1, data = []) {
 	const username = store.getItem('username')
 	const token = store.getItem('token')
 
-	return fetch(`${GH_API_URL}/users/${username}/repos?per_page=${PER_PAGE}${token ? '&access_token=' + token : ''}`)
+	return fetch(`${GH_API_URL}/users/${username}/repos?page=${page}&per_page=${PER_PAGE}${token ? '&access_token=' + token : ''}`)
 		.then(x => x.json())
-		.then(filterForks)
-		.then(filterIgnored)
+		.then(x => {
+			if (x.length === PER_PAGE) {
+			  return fetchUserRepos(page + 1, data.concat(x))
+			}
+			return data.concat(x)
+		})
 }
 
 function filterForks(repos) {
