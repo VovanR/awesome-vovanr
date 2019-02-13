@@ -23,6 +23,7 @@ const _storeData = [
 			'MoonShine_Cursors',
 			'notes',
 			'show-me-which',
+			'test-rebase',
 			'userscripts',
 			'v-addhost',
 			'v-dummyimage',
