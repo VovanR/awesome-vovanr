@@ -1,0 +1,60 @@
+{
+  "name": "awesome-vovanr",
+  "version": "0.0.1",
+  "description": "Awesome VovanR resources",
+  "license": "MIT",
+  "private": true,
+  "repository": "VovanR/awesome-vovanr",
+  "author": "Vladimir Rodkin <mail@vovanr.com> (https://github.com/VovanR)",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "start": "http-server .",
+    "test": "xo && jest"
+  },
+  "files": [
+    "index.html"
+  ],
+  "main": "index.html",
+  "keywords": [],
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "babel-jest": "^25.1.0",
+    "http-server": "^0.12.1",
+    "husky": "^4.2.3",
+    "jest": "^25.1.0",
+    "xo": "^0.28.0"
+  },
+  "peerDependencies": {},
+  "bugs": {
+    "url": "https://github.com/VovanR/awesome-vovanr/issues"
+  },
+  "homepage": "https://github.com/VovanR/awesome-vovanr#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "xo": {
+    "envs": [
+      "browser",
+      "jest"
+    ],
+    "rules": {
+      "comma-dangle": "off",
+      "import/extensions": "off",
+      "promise/prefer-await-to-then": "off",
+      "unicorn/filename-case": "off"
+    },
+    "semicolon": false,
+    "space": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
+  }
+}

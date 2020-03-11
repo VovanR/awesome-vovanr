@@ -1,4 +1,5 @@
 # awesome-vovanr
+
 > Awesome VovanR resources
 
 Parse GitHub repository and format gh-page with info:
@@ -51,3 +52,6 @@ Parse GitHub repository and format gh-page with info:
     "xo": "^0.15.1"
   },
   ```
+
+## License
+MIT © [Vladimir Rodkin](https://github.com/VovanR)
