@@ -1,5 +1,14 @@
 # awesome-vovanr
+
+[![XO code style][codestyle-image]][codestyle-url]
+
+[![Build Status][travis-image]][travis-url]
+[![Dependency Status][depstat-image]][depstat-url]
+[![DevDependency Status][depstat-dev-image]][depstat-dev-url]
+
 > Awesome VovanR resources
+
+Demo: [vovanr.github.io/awesome-vovanr][demo]
 
 Parse GitHub repository and format gh-page with info:
 
@@ -51,3 +60,20 @@ Parse GitHub repository and format gh-page with info:
     "xo": "^0.15.1"
   },
   ```
+
+## License
+MIT © [Vladimir Rodkin](https://github.com/VovanR)
+
+[demo]: https://vovanr.github.io/awesome-vovanr
+
+[codestyle-url]: https://github.com/xojs/xo
+[codestyle-image]: https://img.shields.io/badge/code_style-XO-5ed9c7.svg?style=flat-square
+
+[travis-url]: https://travis-ci.org/VovanR/awesome-vovanr
+[travis-image]: https://img.shields.io/travis/VovanR/awesome-vovanr.svg?style=flat-square
+
+[depstat-url]: https://david-dm.org/VovanR/awesome-vovanr
+[depstat-image]: https://david-dm.org/VovanR/awesome-vovanr.svg?style=flat-square
+
+[depstat-dev-url]: https://david-dm.org/VovanR/awesome-vovanr
+[depstat-dev-image]: https://david-dm.org/VovanR/awesome-vovanr/dev-status.svg?style=flat-square

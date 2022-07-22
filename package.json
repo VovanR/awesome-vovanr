@@ -1,0 +1,33 @@
+{
+  "name": "awesome-vovanr",
+  "version": "0.0.1",
+  "description": "Awesome VovanR resources",
+  "private": true,
+  "license": "MIT",
+  "repository": "VovanR/awesome-vovanr",
+  "author": "Vladimir Rodkin <mail@vovanr.com> (https://github.com/VovanR)",
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "start": "http-server .",
+    "test": "xo"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "xo": "^0.24.0"
+  },
+  "bugs": {
+    "url": "https://github.com/VovanR/awesome-vovanr/issues"
+  },
+  "homepage": "https://github.com/VovanR/awesome-vovanr#readme",
+  "xo": {
+    "space": true,
+    "semicolon": false,
+    "envs": "browser",
+    "rules": {
+      "import/extensions": 0,
+      "unicorn/import-index": 0
+    }
+  }
+}
