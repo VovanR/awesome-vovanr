@@ -3,8 +3,6 @@
 [![XO code style][codestyle-image]][codestyle-url]
 
 [![Build Status][travis-image]][travis-url]
-[![Dependency Status][depstat-image]][depstat-url]
-[![DevDependency Status][depstat-dev-image]][depstat-dev-url]
 
 > Awesome VovanR resources
 
@@ -67,9 +65,3 @@ MIT © [Vladimir Rodkin](https://github.com/VovanR)
 
 [travis-url]: https://travis-ci.org/VovanR/name-name-name
 [travis-image]: https://img.shields.io/travis/VovanR/name-name-name.svg?style=flat-square
-
-[depstat-url]: https://david-dm.org/VovanR/name-name-name
-[depstat-image]: https://david-dm.org/VovanR/name-name-name.svg?style=flat-square
-
-[depstat-dev-url]: https://david-dm.org/VovanR/name-name-name
-[depstat-dev-image]: https://david-dm.org/VovanR/name-name-name/dev-status.svg?style=flat-square
